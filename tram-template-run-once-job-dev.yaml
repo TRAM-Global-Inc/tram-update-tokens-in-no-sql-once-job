@@ -2,22 +2,22 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   namespace: token
-  name: tram-template-run-once-job
+  name: tram-update-tokens-in-no-sql-once-job
   labels:
-    app: tram-template-run-once-job
+    app: tram-update-tokens-in-no-sql-once-job
 
 spec:
   backoffLimit: 3
   template:
     metadata:
       labels:
-        app: tram-template-run-once-job
+        app: tram-update-tokens-in-no-sql-once-job
     spec:
       restartPolicy: OnFailure
       containers:
-        - name: tram-template-run-once-job
+        - name: tram-update-tokens-in-no-sql-once-job
           imagePullPolicy: Always
-          image: us-docker.pkg.dev/tram-dev-environment-global/tram-template-run-once-job/tram-template-run-once-job-snapshot-1.0:latest
+          image: us-docker.pkg.dev/tram-dev-environment-global/tram-update-tokens-in-no-sql-once-job/tram-update-tokens-in-no-sql-once-job-snapshot-1.0:latest
           resources:
             requests:
               memory: "0.5Gi"
@@ -27,13 +27,17 @@ spec:
               cpu: "1"
           env:
             - name: APP_NAME
-              value: tram-template-run-once-job
+              value: tram-update-tokens-in-no-sql-once-job
             - name: ENVIRONMENT
               value: DEV
             - name: LOG_LEVEL
               value: "debug"
             - name: API_BASE_URL
               value: http://api-dev.tram.co.in/tokenization-service
+            - name: TOKENS_PER_REFERRAL
+              value: "1"
+            - name: MAX_TRIP_TOKEN_ALLOWED
+              value: "100"
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
