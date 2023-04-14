@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: token
+  name: tram-template-run-once-job
+  labels:
+    app: tram-template-run-once-job
+
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: tram-template-run-once-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: tram-template-run-once-job
+          imagePullPolicy: Always
+          image: us-docker.pkg.dev/tram-dev-environment-global/tram-template-run-once-job/tram-template-run-once-job-snapshot-1.0:latest
+          resources:
+            requests:
+              memory: "0.5Gi"
+              cpu: "0.5"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          env:
+            - name: APP_NAME
+              value: tram-template-run-once-job
+            - name: ENVIRONMENT
+              value: PROD
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: API_BASE_URL
+              value: http://api-prod.tram.global/tokenization-service
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tram-api-key
+                  key: tram-api-key

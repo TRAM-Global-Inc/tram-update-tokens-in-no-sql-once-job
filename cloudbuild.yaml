@@ -1,0 +1,28 @@
+steps:
+  # Step 1: Generate an Access Token and save it
+  #
+  # Here we call `gcloud auth print-access-token` to impersonate the service account
+  # `artifact-registry-reader` and grab the auth token we need for our .npmrc file
+  # `/workspace/access_token`. This is accessible in subsequent steps.
+  #
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    args:
+      - '-c'
+      - >
+        gcloud auth print-access-token --impersonate-service-account
+        artifact-registry-reader@tram-dev-environment-global.iam.gserviceaccount.com >
+        access_token
+    entrypoint: sh
+  # Step 2: Build our Docker container
+  #
+  # We build the Docker container passing the access token we generated in Step 1 as
+  # the `--build-arg` `TOKEN`.  It's then accessible within the Dockerfile using
+  # `ARG TOKEN`
+  #
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - '-c'
+      - >
+        docker build -t us-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$_IMAGE_NAME-1.0:latest --build-arg TOKEN=$(cat access_token) .
+    entrypoint: sh
+images: ['us-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$_IMAGE_NAME-1.0:latest']
