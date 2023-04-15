@@ -9,11 +9,11 @@ import { updateTokensInUserFairPlayNoSQLRepository } from './repository/UpdateTo
 async function cronLogic() {
   Logger.info('Starting updating tokens in no sql once Job');
   try {
-    // await Promise.allSettled([
-    //   updateReferralTokensInApplicationConfigurator(),
-    //   updateMaxTripTokenAllowedApplicationConfigurator(),
-    //   updateTokensInUserFairPlayNoSQLRepository(),
-    // ]);
+    await Promise.allSettled([
+      updateReferralTokensInApplicationConfigurator(),
+      updateMaxTripTokenAllowedApplicationConfigurator(),
+      updateTokensInUserFairPlayNoSQLRepository(),
+    ]);
 
     Logger.info('Successfully finished updating tokens run once job');
   } catch (exception) {
