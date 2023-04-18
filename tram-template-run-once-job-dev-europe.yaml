@@ -29,11 +29,11 @@ spec:
             - name: APP_NAME
               value: tram-update-tokens-in-no-sql-once-job
             - name: ENVIRONMENT
-              value: PROD
+              value: DEV
             - name: LOG_LEVEL
               value: "debug"
             - name: API_BASE_URL
-              value: http://api-prod.tram.global/tokenization-service
+              value: http://api-dev-eu.tram.global/tokenization-service
             - name: TOKENS_PER_REFERRAL
               value: "1"
             - name: MAX_TRIP_TOKEN_ALLOWED

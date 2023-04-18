@@ -1,13 +1,13 @@
-# TRAM Template Run Once Job
+# TRAM Update Tokens In NoSQL Once Job
 
-A Kubernetes job template that is meant to run once
+A Kubernetes job to update tokens in NoSQL that is meant to run once
 
 ## Local Setup
 
 1. Ensure you have GIT installed locally.
 2. Ensure you have Node 16.15.1 LTS installed
 3. Ensure you have Brew installed (for MacOS only)
-4. Clone the repository with the following command: `git clone https://github.com/tram-global-inc/tram-template-run-once-job.git`
+4. Clone the repository with the following command: `git clone https://github.com/tram-global-inc/tram-update-tokens-in-no-sql-once-job.git`
 5. Navigate to the newly cloned repository
 6. Authenticate against Google Cloud with `npm run ar-login`
 7. Install dependencies with `npm install`
@@ -16,14 +16,14 @@ A Kubernetes job template that is meant to run once
 ## Building Docker & Running Image
 
 1. Ensure you have Docker Desktop installed and running
-2. CD to the root of the `tram-template-run-once-job` directory
+2. CD to the root of the `tram-update-tokens-in-no-sql-once-job` directory
 3. Execute the following command in terminal:
 ```shell
         gcloud auth print-access-token --impersonate-service-account \
         artifact-registry-reader@tram-dev-environment-global.iam.gserviceaccount.com > access_token
 ```
-4. Run the following in your terminal: `docker build -t tram-template-run-once-job-docker --build-arg TOKEN=$(cat access_token) .`
-5. Run the following in your terminal: `docker run -p 3000:3000 tram-template-run-once-job-docker`
+4. Run the following in your terminal: `docker build -t tram-update-tokens-in-no-sql-once-job-docker --build-arg TOKEN=$(cat access_token) .`
+5. Run the following in your terminal: `docker run -p 3000:3000 tram-update-tokens-in-no-sql-once-job-docker`
 
 ## Implementing Cron Logic
 
@@ -42,7 +42,7 @@ create a `.env` file with the following content:
 
 ```json
 LOG_LEVEL=debug
-APP_NAME=tram-template-run-once-job
+APP_NAME=tram-update-tokens-in-no-sql-once-job
 API_KEY=API_KEY_HERE
 ```
 ## Notes
